@@ -52,7 +52,7 @@ val appModule = module {
 
     // ViewModels
     viewModel {
-        ChatViewModel(get(), get(), get())
+        ChatViewModel(get(), get(), get(), get())
     }
     viewModel { ConversationListViewModel(get()) }
     viewModel { AssistantViewModel(get()) }
