@@ -51,8 +51,8 @@ val appModule = module {
     single { SettingsRepository(androidContext()) }
 
     // ViewModels
-    viewModel { (conversationId: String?) ->
-        ChatViewModel(get(), get(), get(), conversationId)
+    viewModel {
+        ChatViewModel(get(), get(), get())
     }
     viewModel { ConversationListViewModel(get()) }
     viewModel { AssistantViewModel(get()) }
