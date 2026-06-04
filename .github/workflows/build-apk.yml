@@ -1,0 +1,63 @@
+name: Build APK
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: gradle
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Build APK
+      run: ./gradlew assembleDebug
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: lastchat-debug-apk
+        path: app/build/outputs/apk/debug/app-debug.apk
+        retention-days: 30
+
+    - name: Upload APK to Release (on main branch)
+      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v1.0.0-debug
+        name: "LastChat v1.0.0 Debug"
+        body: |
+          LastChat Android Debug Build
+          
+          首次使用：
+          1. 下载 app-debug.apk
+          2. 在 Android 设置中允许"安装未知来源应用"
+          3. 安装并打开
+          4. 在设置中添加你的 AI 提供商 API Key
+          
+          支持的提供商：
+          - OpenAI (GPT-4o, GPT-4o-mini)
+          - Anthropic (Claude 3.5 Sonnet)
+          - Google Gemini
+          - Ollama (本地模型)
+          - 自定义 OpenAI 兼容 API
+        files: app/build/outputs/apk/debug/app-debug.apk
+        draft: false
+        prerelease: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
