@@ -18,7 +18,7 @@ import com.lastchat.app.data.local.entity.ProviderConfigEntity
         AssistantEntity::class,
         ProviderConfigEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
