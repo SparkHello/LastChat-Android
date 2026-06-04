@@ -101,7 +101,7 @@ fun AssistantEditScreen(
                     }
                     onNavigateBack()
                 },
-                enabled = name.isNotBlank()
+                
             ) {
                 Icon(Icons.Default.Save, contentDescription = "Save")
             }
