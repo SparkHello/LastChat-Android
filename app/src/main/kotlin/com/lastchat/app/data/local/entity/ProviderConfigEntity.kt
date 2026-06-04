@@ -12,5 +12,6 @@ data class ProviderConfigEntity(
     val baseUrl: String,
     val models: String,
     val isEnabled: Boolean,
-    val isDefault: Boolean
+    val isDefault: Boolean,
+    val createdAt: Long = System.currentTimeMillis()
 )
