@@ -17,7 +17,8 @@ data class ProviderConfig(
     val baseUrl: String,
     val models: List<String> = emptyList(),
     val isEnabled: Boolean = true,
-    val isDefault: Boolean = false
+    val isDefault: Boolean = false,
+    val createdAt: Long = System.currentTimeMillis()
 ) {
     fun toEntity(): ProviderConfigEntity = ProviderConfigEntity(
         id = id,
@@ -27,7 +28,8 @@ data class ProviderConfig(
         baseUrl = baseUrl,
         models = Json.encodeToString(models),
         isEnabled = isEnabled,
-        isDefault = isDefault
+        isDefault = isDefault,
+        createdAt = createdAt
     )
 
     companion object {
@@ -39,7 +41,8 @@ data class ProviderConfig(
             baseUrl = entity.baseUrl,
             models = Json.decodeFromString(entity.models),
             isEnabled = entity.isEnabled,
-            isDefault = entity.isDefault
+            isDefault = entity.isDefault,
+            createdAt = entity.createdAt
         )
     }
 }
